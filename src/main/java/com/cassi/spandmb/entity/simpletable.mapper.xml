@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cassi.spandmb.entity.simpletablemapper">
+	<insert id="save" parameterType="com.cassi.spandmb.entity.SimpleTable" useGeneratedKeys="true">
+		insert into simpletable(username) values (#{username})
+	</insert>
+	
+	<select id="getSimpleTableById" parameterType="int" resultType="com.cassi.spandmb.entity.SimpleTable">
+		select * from simpletable where id = #{id}
+	</select>
+	
+	<select id="getSimpleTableByIds" parameterType="java.util.List" resultType="com.cassi.spandmb.entity.SimpleTable">
+		select * from simpletable where id in 
+		<foreach collection="list" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="loginCheck" parameterType="java.util.Map" resultType="com.cassi.spandmb.entity.User">
+		select * from users where name=#{userName} and password=#{password}
+	</select>
+	
+	<select id="getSalt" parameterType="String" resultType="String">
+		select salt from users where name=#{userName}
+	</select>
+	
+	<insert id="register" parameterType="java.util.Map" useGeneratedKeys="true">
+		insert into users(name,password,salt,signuptime) values (#{userName},#{password},#{salt},#{signuptime})
+	</insert>
+	
+</mapper>

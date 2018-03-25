@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- <context:property-placeholder location="classpath:application.properties" ignore-unresolvable="true"/> -->
+	
+	<context:component-scan base-package="com.cassi.spandmb.controller">
+	</context:component-scan>
+	<mvc:annotation-driven conversion-service="conversionService" />
+	<mvc:default-servlet-handler/>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.cassi.spandmb.helper.String2DateConverter">
+					<property name="datePattern" value="yyyy-MM-dd"></property>
+				</bean>
+				<bean class="com.cassi.spandmb.helper.String2UserConverter"></bean>
+			</list>
+		</property>
+	</bean>
+	
+</beans>
